@@ -7,11 +7,14 @@
   "author": "Hiago Souza",
   "scripts": {
     "dev:server": "ts-node-dev --inspect --transpile-only  --ignore-watch node_modules src/server.ts",
-    "build": "tsc"
+    "build": "tsc",
+    "typeorm": "ts-node-dev ./node_modules/typeorm/cli.js"
   },
   "dependencies": {
     "date-fns": "^2.16.1",
     "express": "^4.17.1",
+    "pg": "^8.5.1",
+    "typeorm": "^0.2.29",
     "uuid": "^8.3.1"
   },
   "devDependencies": {
