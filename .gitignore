@@ -2,3 +2,6 @@
 /dist
 /docker/data
 /docker/.env
+
+/tmp/*
+!tmp/*.gitkeep
