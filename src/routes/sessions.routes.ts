@@ -12,7 +12,7 @@ sessionsRouter.post('/', async (request, response) => {
 
     const { user, token } = await authenticate.execute({ email, password });
 
-    user = {
+    const userWithoutPassword = {
       id: user.id,
       name: user.name,
       email: user.email,
@@ -20,7 +20,7 @@ sessionsRouter.post('/', async (request, response) => {
       updated_at: user.updated_at,
     };
 
-    return response.json({ user, token });
+    return response.json({ user: userWithoutPassword, token });
   } catch (error) {
     return response.status(400).json({ error: error.message });
   }
