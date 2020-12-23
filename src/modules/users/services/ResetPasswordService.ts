@@ -1,4 +1,4 @@
-import { inject } from 'tsyringe';
+import { inject, injectable } from 'tsyringe';
 import { addHours, isAfter } from 'date-fns';
 
 import AppError from '@shared/errors/AppError';
@@ -13,6 +13,7 @@ interface IRequest {
   password: string;
 }
 
+@injectable()
 class ResetPasswordService {
   constructor(
     @inject('UsersRepository')
