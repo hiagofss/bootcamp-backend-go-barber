@@ -12,23 +12,26 @@ import CreateUserService from './CreateUserService';
 let fakeUsersRepository: FakeUsersRepository;
 let fakeHashProvider: FakeHashProvider;
 
+let createUserService: CreateUserService;
+let authenticateUserService: AuthenticateUserService;
+
 describe('AuthenticateUserService', () => {
   beforeEach(() => {
     fakeUsersRepository = new FakeUsersRepository();
     fakeHashProvider = new FakeHashProvider();
+
+    createUserService = new CreateUserService(
+      fakeUsersRepository,
+      fakeHashProvider,
+    );
+
+    authenticateUserService = new AuthenticateUserService(
+      fakeUsersRepository,
+      fakeHashProvider,
+    );
   });
 
   it('should be able to authenticate', async () => {
-    const createUserService = new CreateUserService(
-      fakeUsersRepository,
-      fakeHashProvider,
-    );
-
-    const authenticateUserService = new AuthenticateUserService(
-      fakeUsersRepository,
-      fakeHashProvider,
-    );
-
     const user = await createUserService.execute({
       name: 'Jhon Doe',
       email: 'jhondow@example.com',
@@ -45,11 +48,6 @@ describe('AuthenticateUserService', () => {
   });
 
   it('should be able to authenticate with none existing user', async () => {
-    const authenticateUserService = new AuthenticateUserService(
-      fakeUsersRepository,
-      fakeHashProvider,
-    );
-
     expect(
       authenticateUserService.execute({
         email: 'jhondow@example.com.br',
@@ -59,16 +57,6 @@ describe('AuthenticateUserService', () => {
   });
 
   it('should be able to authenticate with wrong user ', async () => {
-    const createUserService = new CreateUserService(
-      fakeUsersRepository,
-      fakeHashProvider,
-    );
-
-    const authenticateUserService = new AuthenticateUserService(
-      fakeUsersRepository,
-      fakeHashProvider,
-    );
-
     await createUserService.execute({
       name: 'Jhon Doe',
       email: 'jhondow@example.com',
