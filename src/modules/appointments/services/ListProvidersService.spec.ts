@@ -1,42 +1,42 @@
-import 'reflect-metadata';
-
-import AppError from '@shared/errors/AppError';
-
+import FakeCacheProvider from '@shared/container/providers/CacheProvider/fakes/FakeCacheProvider';
 import FakeUsersRepository from '@modules/users/repositories/fakes/FakeUsersRepository';
-
 import ListProvidersService from './ListProvidersService';
 
 let fakeUsersRepository: FakeUsersRepository;
+let fakeCacheProvider: FakeCacheProvider;
+let listProviders: ListProvidersService;
 
-let listProvidersService: ListProvidersService;
-
-describe('ListProvidersService', () => {
+describe('ListProviders', () => {
   beforeEach(() => {
     fakeUsersRepository = new FakeUsersRepository();
+    fakeCacheProvider = new FakeCacheProvider();
 
-    listProvidersService = new ListProvidersService(fakeUsersRepository);
+    listProviders = new ListProvidersService(
+      fakeUsersRepository,
+      fakeCacheProvider,
+    );
   });
 
   it('should be able to list the providers', async () => {
-    const loggedUser = await fakeUsersRepository.create({
-      name: 'Jhon Doe',
-      email: 'jhondow1@example.com',
-      password: '123456789',
-    });
-
     const user1 = await fakeUsersRepository.create({
-      name: 'Jhon Doe',
-      email: 'jhondow2@example.com',
-      password: '123456789',
+      name: 'John Doe',
+      email: 'johndoe@example.com',
+      password: '123456',
     });
 
     const user2 = await fakeUsersRepository.create({
-      name: 'Jhon Doe',
-      email: 'jhondow3@example.com',
-      password: '123456789',
+      name: 'John Trê',
+      email: 'johntre@example.com',
+      password: '123456',
     });
 
-    const providers = await listProvidersService.execute({
+    const loggedUser = await fakeUsersRepository.create({
+      name: 'John Qua',
+      email: 'johnqua@example.com',
+      password: '123456',
+    });
+
+    const providers = await listProviders.execute({
       user_id: loggedUser.id,
     });
 
